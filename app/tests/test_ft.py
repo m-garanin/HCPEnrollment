@@ -8,14 +8,15 @@ r"""
 >>> c = Client()
 
 Index-page
-===========
+==================================
 >>> r = c.get('/')
 >>> r.status_code
 200
 
+
 Registration (Simple)
-=====================
-sign-in
+==================================
+sign-up
 -------
 >>> r = c.get('/accounts/register/')
 >>> r.status_code
@@ -28,9 +29,45 @@ sign-in
 302
 
 check provider-object for new user
->>> u = User.objects.get(username='smith')
->>> u.provider is None
+>>> user = User.objects.get(username='smith')
+>>> user.provider is None
 False
+
+sign-in
+-------
+>>> c.login(username=user.username, password='123')
+True
+
+
+Profile
+===================================
+>>> section_url = '/section/%s/edit/'
+
+>>> r = c.get('/users/smith/')
+>>> r.status_code
+301
+
+
+section A
+---------
+>>> r = c.get(section_url % 'A')
+>>> r.status_code
+200
+>>> r.content
+'...Sec A...Sec B...'
+
+
+>>> r = c.post(section_url % 'A', {'new_provider': True})
+>>> r.status_code
+302
+
+
+
+section B
+---------
+>>> r = c.get(section_url % 'B')
+>>> r.status_code
+200
 
 
 """
