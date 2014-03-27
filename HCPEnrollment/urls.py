@@ -11,4 +11,7 @@ urlpatterns = patterns('',
                        
     url(r'^accounts/', include('registration.backends.simple.urls')),                    
     url(r'^admin/', include(admin.site.urls)),
+    
+    url(r'^', include('app.urls')),
+
 )

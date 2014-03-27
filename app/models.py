@@ -14,28 +14,28 @@ class Group_ActionRequested(models.Model):
     class Meta:
         abstract = True
 
-    new_provider = models.BooleanField('New provider', default=False)
-    change_of_business_address = models.BooleanField('Change of business address', default=False)
-    additional_business_address = models.BooleanField('Additional business address', default=False)
+    new_provider = models.BooleanField('New provider', blank=True, default=False)
+    change_of_business_address = models.BooleanField('Change of business address', blank=True, default=False)
+    additional_business_address = models.BooleanField('Additional business address', blank=True, default=False)
     
-    new_taxpayer_id_number= models.BooleanField('New Taxpayer ID number', default=False)
-    facility_based_provider= models.BooleanField('Facility-Based Provider', default=False)
+    new_taxpayer_id_number= models.BooleanField('New Taxpayer ID number', blank=True, default=False)
+    facility_based_provider= models.BooleanField('Facility-Based Provider', blank=True, default=False)
     
-    change_of_ownership= models.BooleanField('Change of ownership', default=False)     
-    change_of_ownership_date = models.DateField('change of ownership effective date', null=True)
+    change_of_ownership= models.BooleanField('Change of ownership', blank=True, default=False)     
+    change_of_ownership_date = models.DateField('change of ownership effective date', blank=True, null=True)
     
-    cumulative_change_of_50_person = models.BooleanField('*Cumulative change of 50 percent or more in person(s) with ownership or control interest (per CCR, Title 22, Section 51000.15)', default=False)
-    sale_of_assets_50_percent = models.BooleanField('*Sale of assets 50 percent or more (per CCR, Title 22, Section 51000.30)', default=False)
-    ar_special_effective_date = models.DateField('For items above marked with * indicate effective date', null=True)
+    cumulative_change_of_50_person = models.BooleanField('*Cumulative change of 50 percent or more in person(s) with ownership or control interest (per CCR, Title 22, Section 51000.15)', blank=True, default=False)
+    sale_of_assets_50_percent = models.BooleanField('*Sale of assets 50 percent or more (per CCR, Title 22, Section 51000.30)', blank=True, default=False)
+    ar_special_effective_date = models.DateField('For items above marked with * indicate effective date', blank=True, null=True)
     
     
     
     continued_enrollment = models.BooleanField("""Continued Enrollment (Do not check this box unless you have been requested 
-                          by the Department to apply for continued enrollment in the Medi-Cal program pursuant to CCR, Title 22, Section 51000.55.)""", 
+                          by the Department to apply for continued enrollment in the Medi-Cal program pursuant to CCR, Title 22, Section 51000.55.)""",blank=True,  
                          default=False)
     i_intend = models.BooleanField("""I intend to use my current provider number to bill for services delivered at
                             this location while this application request is pending. I understand that I 
-                            will be on provisional provider status during this time, pursuant to CCR, Title 22, Section 51000.51.""", default=False)
+                            will be on provisional provider status during this time, pursuant to CCR, Title 22, Section 51000.51.""", blank=True, default=False)
     
     
 class Group_MediCalApplicationFee(models.Model):
@@ -54,20 +54,53 @@ class Group_MediCalApplicationFee(models.Model):
                                                               request with this application. (Attach cashier’s check and/or waiver request)""", default=False)
 
 
+
 class Group_TypeOfEntity(models.Model):
     """ Type of entity (check one)
     """
     class Meta:
         abstract = True
         
-    type_of_entity = models.IntegerField('Type of entity', null=True)
+    type_of_entity = models.IntegerField('Type of entity', null=True) # TODO : choices
+    
+    # only for Corporation
+    corporate_number = models.CharField('Corporate number', blank=True, max_length=255)
+    state_incorporated = models.CharField('State incorporated', blank=True, max_length=2) # TODO: from states-dictionary
+    
+    # only for LLC
+    llc_number = models.CharField('LLC number', blank=True, max_length=255)
+    state_registered_filed = models.CharField('State registered/filed', blank=True, max_length=2) # TODO: from states-dictionary
+    
+    # only for Nonprofit Corporation
+    type_of_nonprofit  = models.CharField('Type of nonprofit', blank=True, max_length=255)
+    
+    # only for Other
+    other_description = models.CharField('Other description', blank=True, max_length=255)
+    
+    
+class Group_Names(models.Model):
+    """ Legal & Business names
+    """
+    class Meta:
+        abstract = True
+    
+    legal_name = models.CharField('Legal name of applicant or provider (as listed with the IRS)', blank=True, max_length=255)
+    business_name = models.CharField('Business name, if different', blank=True, max_length=255)
+    
+    fictitious_business_name = models.BooleanField('Is this a fictitious business name?', default=False)
+    fictitious_number= models.CharField('If yes, list the Fictitious Business Name Statement/Permit number', blank=True, max_length=255) 
+    fictitious_effective_date = models.DateField('Effective date', null=True)
+
+    business_telephone_number = models.CharField('Business telephone number', blank=True, max_length=255)
+    
     
 
 
+
 # = models.BooleanField('', default=False)
+# = models.CharField('', blank=True, max_length=255)
 
-
-class Provider(Group_ActionRequested, Group_MediCalApplicationFee, Group_TypeOfEntity):
+class Provider(Group_ActionRequested, Group_MediCalApplicationFee, Group_TypeOfEntity, Group_Names):
     """
     Info about HC Provider
     """
@@ -78,6 +111,6 @@ class Provider(Group_ActionRequested, Group_MediCalApplicationFee, Group_TypeOfE
 
 
 @receiver(user_registered)
-def create_provider(sender, signal, user, request):
-    Provider.objects.create(user=user)
+def create_provider(sender, **kwargs):
+    Provider.objects.create(user=kwargs['user'])
     
