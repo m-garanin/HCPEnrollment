@@ -1,0 +1,30 @@
+{% csrf_token %}
+
+{% if form.errors %}
+	<div class="alert alert-error">
+		Please, correct error
+		{% if form.non_field_errors %}
+			{{ form.non_field_errors }}
+		{% endif %}
+	</div>
+{% endif %}
+
+{% for field in form %}
+	<div class="control-group{% if field.errors %} error{% endif %}">
+	  <label class="control-label">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
+		<div class="controls">
+			{{ field }}
+			{% if field.help_text %}
+				<p class="help-block">{{ field.help_text }}</p>
+			{% endif %}
+		</div>
+	</div>
+{% endfor %}
+
+<div class="alert alert-info">
+	<span class="required_field">*</span> <span class="notice_note">Required fields</span>
+</div>
+
+<div class="form-actions">
+	<button type="submit" class="btn btn-primary">{% block button %}Submit{% endblock %}</button>
+</div>

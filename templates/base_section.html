@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<center>
+<h3 class="center-block">MEDI-CAL PROVIDER APPLICATION</h3>
+</center>
+
+<ul class="nav nav-tabs">
+ {% for code, sec in sections %}
+  <li {% ifequal code active_code %}class="active" {% endifequal %}> 
+    <a href="{% url 'section_edit' code %}">{{ sec.title }}</a> 
+  </li>
+ {% endfor %}
+</ul>
+
+{% block section %}
+
+{% endblock %}
+
+{% endblock %}
