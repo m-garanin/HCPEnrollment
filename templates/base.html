@@ -17,7 +17,12 @@
     <![endif]-->
     <style>   
       body { padding-top: 70px; }
-      
+      div.section_body {
+      border-left:1px solid #ededed;
+      border-right:1px solid #ededed;
+      border-bottom:1px solid #ededed;
+      padding:5px;
+      }
     </style>
 
   </head>
@@ -27,7 +32,14 @@
       <div class="container">
 
 	  <a class="navbar-brand" href="/">HCP Enrollment</a>
-
+	  <p class="navbar-text pull-right">
+	  {% if user.is_authenticated %}
+	   {{ user }} /
+	    <a href="{% url 'auth_logout' %}">Logout</a>
+	  {% endif %}
+	  </p>
+	  
+			
 	
       </div>
     </nav>

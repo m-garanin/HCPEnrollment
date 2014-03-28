@@ -10,6 +10,7 @@
 {% endif %}
 
 {% for field in form %}
+
 	<div class="control-group{% if field.errors %} error{% endif %}">
 	  <label class="control-label">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
 		<div class="controls">
@@ -19,12 +20,21 @@
 			{% endif %}
 		</div>
 	</div>
+
+<!--
+<div class="form-group">
+   {{ field }}
+    
+  <label>{{ field.label }}{% if field.field.required %} *{% endif %}</label>
+ 
+</div>
+-->
+
 {% endfor %}
 
-<div class="alert alert-info">
-	<span class="required_field">*</span> <span class="notice_note">Required fields</span>
+{% block buttons %}
+<div class="form-actions">
+  <button type="submit" class="btn btn-primary">{% block button %}Submit{% endblock %}</button>
 </div>
 
-<div class="form-actions">
-	<button type="submit" class="btn btn-primary">{% block button %}Submit{% endblock %}</button>
-</div>
+{% endblock %}
