@@ -7,14 +7,17 @@
 
     <form method="post" action="." role="form">
       {% csrf_token %} 
+    
+      <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+      <br/>
+      <input type="password" name="password" class="form-control" placeholder="Password" required>
+      <br/>
       
-      <input type="username" class="form-control" placeholder="Username" required autofocus>
-      <br/>
-      <input type="password" class="form-control" placeholder="Password" required>
-      <br/>
       <button class="btn btn-lg btn-primary btn-block" type="submit"> Sig in</button>
-      <!--<input type="submit" value="Log in" />-->
-      <input type="hidden" name="next" value="{{ next }}" />
+      
+      <!-- {{ form.as_p }}-->
+      <!-- <input type="submit" value="Log in" />-->
+      <input type="hidden" name="next" value="{% url 'section_edit' 'A' %}" />
     </form>
     <br/>
     <!--
