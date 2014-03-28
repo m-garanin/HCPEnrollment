@@ -8,8 +8,8 @@ from models import *
 SECTIONS = ( ('A', {'title': 'Sec A', 'model': Group_ActionRequested } ), 
              ('B', {'title': 'Sec B', 'model': Group_MediCalApplicationFee } ),
              ('C', {'title': 'Sec C', 'model': Group_TypeOfEntity } ),
-             ('D', {'title': 'Sec D', 'model': Group_TypeOfEntity } ),
-             ('E', {'title': 'Sec E', 'model': Group_TypeOfEntity} ),
+             #('D', {'title': 'Sec D', 'model': Group_TypeOfEntity } ),
+             #('E', {'title': 'Sec E', 'model': Group_TypeOfEntity} ),
 )
 
 SECTIONS_DICT = dict(SECTIONS)
