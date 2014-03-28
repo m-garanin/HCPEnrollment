@@ -3,9 +3,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, UpdateView, FormView
 from django import forms
 
-
 from models import *
-# Create your views here.
 
 SECTIONS = ( ('A', {'title': 'Sec A', 'model': Group_ActionRequested } ), 
              ('B', {'title': 'Sec B', 'model': Group_MediCalApplicationFee } ),
@@ -16,7 +14,6 @@ SECTIONS = ( ('A', {'title': 'Sec A', 'model': Group_ActionRequested } ),
 
 SECTIONS_DICT = dict(SECTIONS)
 
-        
 
 class SectionEdit(UpdateView):
     template_name = 'section_edit.html'
@@ -29,7 +26,6 @@ class SectionEdit(UpdateView):
                 model = info['model']
         return DynFrm
     
-    
     def get_object(self):
         prov = self.request.user.provider
         return prov
@@ -41,5 +37,9 @@ class SectionEdit(UpdateView):
         return context
 
     def get_success_url(self):
-        #url = self.request.path
-        return reverse('section_edit', kwargs={'code':'A'})
+        # go to next section or to 'A'
+        code = self.kwargs['code']
+        next_code = chr(ord(code)+1)
+        if next_code not in SECTIONS_DICT:
+            next_code = 'A'
+        return reverse('section_edit', kwargs={'code':next_code})
