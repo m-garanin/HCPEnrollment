@@ -11,6 +11,9 @@ from models import *
 SECTIONS = ( ('A', {'title': 'Sec A', 'form':sec_forms.SecA } ), 
              ('B', {'title': 'Sec B', 'form':sec_forms.SecB} ),
              ('C', {'title': 'Sec C', 'form':sec_forms.SecC} ),
+             ('D', {'title': 'Sec D', 'form':sec_forms.SecD} ),
+             ('E', {'title': 'Sec E', 'form':sec_forms.SecE} ),
+
 )
 
 SECTIONS_DICT = dict(SECTIONS)

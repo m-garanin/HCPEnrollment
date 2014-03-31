@@ -92,4 +92,29 @@ section C
 u'notes123'
 
 
+section D
+---------
+>>> r = c.get(section_url % 'D')
+>>> r.status_code
+200
+
+>>> r = c.post(section_url % 'D', {'legal_name': 'LName'})
+>>> r.status_code
+302
+
+>>> p = getLast(Provider)
+>>> p.legal_name
+u'LName'
+
+section E
+---------
+>>> r = c.get(section_url % 'E')
+>>> r.status_code
+200
+
+>>> r.content
+'...ARIZONA...'
+
+
+
 """
