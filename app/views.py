@@ -3,13 +3,14 @@ from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, UpdateView, FormView
 from django import forms
 
+from crispy_forms.helper import FormHelper
+import sec_forms
+
 from models import *
 
-SECTIONS = ( ('A', {'title': 'Sec A', 'model': Group_ActionRequested } ), 
-             ('B', {'title': 'Sec B', 'model': Group_MediCalApplicationFee } ),
-             ('C', {'title': 'Sec C', 'model': Group_TypeOfEntity } ),
-             #('D', {'title': 'Sec D', 'model': Group_TypeOfEntity } ),
-             #('E', {'title': 'Sec E', 'model': Group_TypeOfEntity} ),
+SECTIONS = ( ('A', {'title': 'Sec A', 'form':sec_forms.SecA } ), 
+             ('B', {'title': 'Sec B', 'form':sec_forms.SecB} ),
+             ('C', {'title': 'Sec C', 'form':sec_forms.SecC} ),
 )
 
 SECTIONS_DICT = dict(SECTIONS)
@@ -21,10 +22,7 @@ class SectionEdit(UpdateView):
     def get_form_class(self):
         code = self.kwargs['code']
         info = SECTIONS_DICT[code]
-        class DynFrm(forms.ModelForm):
-            class Meta:
-                model = info['model']
-        return DynFrm
+        return info['form']
     
     def get_object(self):
         prov = self.request.user.provider

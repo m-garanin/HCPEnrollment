@@ -3,7 +3,7 @@ r"""
 >>> from django.test.client import Client
 >>> from django.contrib.auth.models import User, Permission
 
->>> from app.models import *
+>>> from app.models import Provider
 
 >>> c = Client()
 
@@ -57,10 +57,9 @@ section A
 '...Sec A...Sec B...'
 
 
->>> r = c.post(section_url % 'A', {'new_provider': True})
+>>> r = c.post(section_url % 'A', {'npi': '123','new_provider': True})
 >>> r.status_code
 302
-
 
 
 section B
@@ -68,6 +67,29 @@ section B
 >>> r = c.get(section_url % 'B')
 >>> r.status_code
 200
+
+>>> r = c.post(section_url % 'B', {'enrolled_in_another_program': True})
+>>> r.status_code
+302
+
+>>> p = getLast(Provider)
+>>> p.enrolled_in_another_program
+True
+
+
+section C
+---------
+>>> r = c.get(section_url % 'C')
+>>> r.status_code
+200
+
+>>> r = c.post(section_url % 'C', {'type_of_entity': 10, 'other_description': 'notes123'})
+>>> r.status_code
+302
+
+>>> p = getLast(Provider)
+>>> p.other_description
+u'notes123'
 
 
 """

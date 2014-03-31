@@ -5,15 +5,21 @@ from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from registration.signals import user_registered as user_registered
+import const
 
-        
-        
-class Group_ActionRequested(models.Model):
-    """ Enrollment action requested (check all that apply)
-    """ 
-    class Meta:
-        abstract = True
+class Provider(models.Model):
+    """
+    Info about HC Provider
+    """
+    user = models.OneToOneField(User)
+    #title = models.CharField(max_length=100)
+    npi = models.CharField('Provider number (NPI or Denti-Cal number as applicable)', 
+                           max_length=20)
 
+    
+    ##############################################################################################
+    ##  Enrollment action requested (check all that apply)
+    ##############################################################################################    
     new_provider = models.BooleanField('New provider', blank=True, default=False)
     change_of_business_address = models.BooleanField('Change of business address', blank=True, default=False)
     additional_business_address = models.BooleanField('Additional business address', blank=True, default=False)
@@ -36,14 +42,12 @@ class Group_ActionRequested(models.Model):
     i_intend = models.BooleanField("""I intend to use my current provider number to bill for services delivered at
                             this location while this application request is pending. I understand that I 
                             will be on provisional provider status during this time, pursuant to CCR, Title 22, Section 51000.51.""", blank=True, default=False)
-    
-    
-class Group_MediCalApplicationFee(models.Model):
-    """ Medi-Cal Application Fee (check all that apply)
-    """
-    class Meta:
-        abstract = True
 
+
+
+    ##############################################################################################
+    ##  Medi-Cal Application Fee (check all that apply)
+    ##############################################################################################        
     enrollment_as_an_individual_nonphysician_practitioner = models.BooleanField('I am requesting enrollment as an individual nonphysician practitioner.', default=False)
     enrolled_in_the_medicare_program = models.BooleanField('I am currently enrolled in the Medicare program at this business address and under this legal name. (Attach verification)', default=False)
     enrolled_in_another_program = models.BooleanField("""I am currently enrolled in another State’s Medicaid or Children’s Health Insurance Program (CHIP) at this business address and under this legal name. (Attach verification)""", 
@@ -55,13 +59,14 @@ class Group_MediCalApplicationFee(models.Model):
 
 
 
-class Group_TypeOfEntity(models.Model):
-    """ Type of entity (check one)
-    """
-    class Meta:
-        abstract = True
-        
-    type_of_entity = models.IntegerField('Type of entity', null=True) # TODO : choices
+
+
+    ##############################################################################################
+    ## Type of entity (check one)
+    ##############################################################################################    
+    type_of_entity = models.IntegerField('Type of entity', 
+                                         choices=const.TYPE_OF_ENTITY_CHOICES, 
+                                         null=True)
     
     # only for Corporation
     corporate_number = models.CharField('Corporate number', blank=True, max_length=255)
@@ -76,14 +81,11 @@ class Group_TypeOfEntity(models.Model):
     
     # only for Other
     other_description = models.CharField('Other description', blank=True, max_length=255)
-    
-    
-class Group_Names(models.Model):
-    """ Legal & Business names
-    """
-    class Meta:
-        abstract = True
-    
+
+
+    ##############################################################################################
+    ## Legal & Business names
+    ##############################################################################################    
     legal_name = models.CharField('Legal name of applicant or provider (as listed with the IRS)', blank=True, max_length=255)
     business_name = models.CharField('Business name, if different', blank=True, max_length=255)
     
@@ -97,16 +99,16 @@ class Group_Names(models.Model):
 
 
 
+
+
+    ##############################################################################################
+    ## 
+    ##############################################################################################    
+
 # = models.BooleanField('', default=False)
 # = models.CharField('', blank=True, max_length=255)
 
-class Provider(Group_ActionRequested, Group_MediCalApplicationFee, Group_TypeOfEntity, Group_Names):
-    """
-    Info about HC Provider
-    """
-    user = models.OneToOneField(User)
-    #title = models.CharField(max_length=100)
-    npi = models.CharField(max_length=20)
+
 
 
 
