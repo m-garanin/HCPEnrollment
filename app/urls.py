@@ -5,6 +5,6 @@ from views import SectionEdit
 
 
 urlpatterns = patterns('',
-   url(r'^users/', RedirectView.as_view(url='/section/A/edit/')),
-   url(r'^section/(?P<code>\w+)/edit/$', SectionEdit.as_view(), name='section_edit' ) 
+                       url(r'^users/', RedirectView.as_view(url='/section/A/edit/'), name='profile'),
+                       url(r'^section/(?P<code>\w+)/edit/$', SectionEdit.as_view(), name='section_edit' ) 
 )
