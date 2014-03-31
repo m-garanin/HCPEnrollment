@@ -7,19 +7,18 @@ from django.contrib.auth.models import User
 from registration.signals import user_registered as user_registered
 import const
 
-class Provider(models.Model):
-    """
-    Info about HC Provider
-    """
-    user = models.OneToOneField(User)
-    #title = models.CharField(max_length=100)
+
+
+##############################################################################################
+##  Enrollment action requested (check all that apply)
+##############################################################################################
+class Model_A(models.Model):
+    class Meta:
+        abstract = True
+    
     npi = models.CharField('Provider number (NPI or Denti-Cal number as applicable)', 
                            max_length=20)
-
     
-    ##############################################################################################
-    ##  Enrollment action requested (check all that apply)
-    ##############################################################################################    
     new_provider = models.BooleanField('New provider', blank=True, default=False)
     change_of_business_address = models.BooleanField('Change of business address', blank=True, default=False)
     additional_business_address = models.BooleanField('Additional business address', blank=True, default=False)
@@ -45,9 +44,13 @@ class Provider(models.Model):
 
 
 
-    ##############################################################################################
-    ##  Medi-Cal Application Fee (check all that apply)
-    ##############################################################################################        
+
+##############################################################################################
+##  Medi-Cal Application Fee (check all that apply)
+##############################################################################################    
+class Model_B(models.Model):
+    class Meta:
+        abstract = True
     enrollment_as_an_individual_nonphysician_practitioner = models.BooleanField('I am requesting enrollment as an individual nonphysician practitioner.', default=False)
     enrolled_in_the_medicare_program = models.BooleanField('I am currently enrolled in the Medicare program at this business address and under this legal name. (Attach verification)', default=False)
     enrolled_in_another_program = models.BooleanField("""I am currently enrolled in another State’s Medicaid or Children’s Health Insurance Program (CHIP) at this business address and under this legal name. (Attach verification)""", 
@@ -59,11 +62,13 @@ class Provider(models.Model):
 
 
 
+##############################################################################################
+## Type of entity (check one)
+##############################################################################################   
+class Model_C(models.Model):
+    class Meta:
+        abstract = True
 
-
-    ##############################################################################################
-    ## Type of entity (check one)
-    ##############################################################################################    
     type_of_entity = models.IntegerField('Type of entity', 
                                          choices=const.TYPE_OF_ENTITY_CHOICES, 
                                          null=True)
@@ -83,32 +88,76 @@ class Provider(models.Model):
     other_description = models.CharField('Other description', blank=True, max_length=255)
 
 
-    ##############################################################################################
-    ## Legal & Business names
-    ##############################################################################################    
+
+##############################################################################################
+## Legal & Business names
+##############################################################################################
+class Model_D(models.Model):
+    class Meta:
+        abstract = True
+        
     legal_name = models.CharField('Legal name of applicant or provider (as listed with the IRS)', blank=True, max_length=255)
     business_name = models.CharField('Business name, if different', blank=True, max_length=255)
     
-    fictitious_business_name = models.BooleanField('Is this a fictitious business name?', default=False)
-    fictitious_number= models.CharField('If yes, list the Fictitious Business Name Statement/Permit number', blank=True, max_length=255) 
-    fictitious_effective_date = models.DateField('Effective date', null=True)
+    fictitious_business_name = models.BooleanField('Is this a fictitious business name?', blank=True, default=False)
+    fictitious_number = models.CharField('If yes, list the Fictitious Business Name Statement/Permit number', blank=True, max_length=255) 
+    fictitious_effective_date = models.DateField('Effective date', blank=True, null=True)
 
     business_telephone_number = models.CharField('Business telephone number', blank=True, max_length=255)
     
+
+    
+##############################################################################################
+##  Business\Pay\Mail\Prev addresses
+##############################################################################################        
+class Model_E(models.Model):
+    class Meta:
+        abstract = True
+
+    ba_title = models.CharField('Business address (number, street)', blank=True, max_length=255)
+    ba_city = models.CharField('City', blank=True, max_length=255)
+    ba_county = models.CharField('County', blank=True, max_length=255)
+    ba_state = models.CharField('State', choices=const.STATES, blank=True, max_length=2) 
+    ba_zip = models.CharField('Nine-digit ZIP code', blank=True, max_length=9)
+    
+
+    pa_title = models.CharField('Pay-to address (number, street, P.O. Box number)', blank=True, max_length=255)
+    pa_city = models.CharField('City', blank=True, max_length=255)
+    pa_county = models.CharField('County', blank=True, max_length=255)
+    pa_state = models.CharField('State', choices=const.STATES, blank=True, max_length=2) 
+    pa_zip = models.CharField('Nine-digit ZIP code', blank=True, max_length=9)
+    
+
+    ma_title = models.CharField('Mailing address (number, street, P.O. Box number)', blank=True, max_length=255)
+    ma_city = models.CharField('City', blank=True, max_length=255)
+    ma_county = models.CharField('County', blank=True, max_length=255)
+    ma_state = models.CharField('State', choices=const.STATES, blank=True, max_length=2) 
+    ma_zip = models.CharField('Nine-digit ZIP code', blank=True, max_length=9)
+    
+    pr_title = models.CharField('Previous business address (number, street)', blank=True, max_length=255)
+    pr_city = models.CharField('City', blank=True, max_length=255)
+    pr_county = models.CharField('County', blank=True, max_length=255)
+    pr_state = models.CharField('State', choices=const.STATES, blank=True, max_length=2) 
+    pr_zip = models.CharField('Nine-digit ZIP code', blank=True, max_length=9)
+    
     
 
 
-
-
-
-    ##############################################################################################
-    ## 
-    ##############################################################################################    
+##############################################################################################
+## 
+##############################################################################################    
 
 # = models.BooleanField('', default=False)
 # = models.CharField('', blank=True, max_length=255)
 
 
+class Provider(Model_A, Model_B, Model_C, Model_D, Model_E):
+    """
+    Info about HC Provider
+    """
+    user = models.OneToOneField(User)
+    #title = models.CharField(max_length=100)
+    
 
 
 
