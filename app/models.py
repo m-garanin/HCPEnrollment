@@ -114,33 +114,153 @@ class Model_E(models.Model):
     class Meta:
         abstract = True
 
-    ba_title = models.CharField('Business address (number, street)', blank=True, max_length=255)
+    # Business address    
+    ba_title = models.CharField('Number, street', blank=True, max_length=255)
     ba_city = models.CharField('City', blank=True, max_length=255)
     ba_county = models.CharField('County', blank=True, max_length=255)
     ba_state = models.CharField('State', choices=const.STATES, blank=True, max_length=2) 
     ba_zip = models.CharField('Nine-digit ZIP code', blank=True, max_length=9)
     
+    is_a_licensed_facility = models.BooleanField('This address is a licensed hospital/health facility.', blank=True, default=False)
+    facility_option_1 = models.BooleanField('All services are provided at this one facility location OR', blank=True, default=False)
+    facility_option_2 = models.BooleanField('Services are provided at more than one licensed health facility', blank=True, default=False)
+    
+    
 
-    pa_title = models.CharField('Pay-to address (number, street, P.O. Box number)', blank=True, max_length=255)
+
+    # Pay-to address
+    pa_title = models.CharField('Number, street, P.O. Box number', blank=True, max_length=255)
     pa_city = models.CharField('City', blank=True, max_length=255)
     pa_county = models.CharField('County', blank=True, max_length=255)
     pa_state = models.CharField('State', choices=const.STATES, blank=True, max_length=2) 
     pa_zip = models.CharField('Nine-digit ZIP code', blank=True, max_length=9)
     
-
-    ma_title = models.CharField('Mailing address (number, street, P.O. Box number)', blank=True, max_length=255)
+    # Mailing address
+    ma_title = models.CharField('Number, street, P.O. Box number', blank=True, max_length=255)
     ma_city = models.CharField('City', blank=True, max_length=255)
     ma_county = models.CharField('County', blank=True, max_length=255)
     ma_state = models.CharField('State', choices=const.STATES, blank=True, max_length=2) 
     ma_zip = models.CharField('Nine-digit ZIP code', blank=True, max_length=9)
     
-    pr_title = models.CharField('Previous business address (number, street)', blank=True, max_length=255)
+    # Previous business address
+    pr_title = models.CharField('Number, street', blank=True, max_length=255)
     pr_city = models.CharField('City', blank=True, max_length=255)
     pr_county = models.CharField('County', blank=True, max_length=255)
     pr_state = models.CharField('State', choices=const.STATES, blank=True, max_length=2) 
     pr_zip = models.CharField('Nine-digit ZIP code', blank=True, max_length=9)
     
+
+
+##############################################################################################
+##  Licence & Taxonomy 
+##############################################################################################        
+class Model_F(models.Model):
+    class Meta:
+        abstract = True
+        
     
+    license_number = models.CharField('License number', blank=True, max_length=255)
+    license_effective_date = models.DateField('License effective date', blank=True, null=True)
+    license_expiration_date = models.DateField('License expiration date', blank=True, null=True)
+    provider_type = models.CharField('Provider type', blank=True, max_length=255)
+    medicare_other_NPI= models.CharField('Medicare/Other NPI', blank=True, max_length=255)
+
+    primary_taxonomy = models.CharField('Primary Taxonomy Code', blank=True, max_length=255)
+    taxonomy_b = models.CharField('Taxonomy Code', blank=True, max_length=255)
+    taxonomy_c = models.CharField('Taxonomy Code', blank=True, max_length=255)
+    
+
+
+##############################################################################################
+##  Taxpayer & Social number
+##############################################################################################        
+class Model_G(models.Model):
+    class Meta:
+        abstract = True
+    
+    taxplayer_number = models.CharField('Taxpayer Identification Number (TIN) issued by the IRS (attach a legible copy of the IRS form)', blank=True, max_length=255)
+    social_number = models.CharField('Social security number. If sole proprietor not using a TIN, you must disclose this number', blank=True, max_length=255)
+    
+
+##############################################################################################
+##  Nurse Practitioner only
+##############################################################################################        
+class Model_H(models.Model):
+    class Meta:
+        abstract = True
+
+    duration_of_training = models.CharField('Duration of training program and school', blank=True, max_length=255)
+    clinical_training = models.CharField('Clinical and didactic training or equivalent experience completed', blank=True, max_length=255)
+    
+
+##############################################################################################
+##  Other licences: Clinical Laboratory  & State Laboratory & Driver 
+##############################################################################################    
+class Model_I(models.Model):
+    class Meta:
+        abstract = True
+
+    clia_cert_info = models.CharField('Clinical Laboratory Improvement Amendment (CLIA) Certificate number', blank=True, max_length=255)
+    state_license_info = models.CharField('State Laboratory License/Registration number', blank=True, max_length=255)
+    driver_license_info = models.CharField('Driver’s license or state-issued identification number and state of issuance', blank=True, max_length=255)
+
+
+##############################################################################################
+## Proof of Liability Insurance
+##############################################################################################    
+class Model_J(models.Model):
+    class Meta:
+        abstract = True
+
+
+    li_company = models.CharField('Name of insurance company', blank=True, max_length=255)
+    li_number = models.CharField('Insurance policy number', blank=True, max_length=255)
+    li_agent = models.CharField('Insurance agent’s name', blank=True, max_length=255)
+    li_agent_phone = models.CharField('Telephone number', blank=True, max_length=255)
+  
+    li_policy_issued = models.DateField('Date policy issued (mm/dd/yyyy)', blank=True, null=True)
+    li_policy_expiration = models.DateField('Expiration date of policy (mm/dd/yyyy)', blank=True, null=True)
+
+
+##############################################################################################
+## Proof of Professional Liability Insurance
+##############################################################################################    
+class Model_K(models.Model):
+    class Meta:
+        abstract = True
+    
+    pli_company = models.CharField('Name of insurance company', blank=True, max_length=255)
+    pli_number = models.CharField('Insurance policy number', blank=True, max_length=255)
+    pli_agent = models.CharField('Insurance agent’s name', blank=True, max_length=255)
+    pli_agent_phone = models.CharField('Telephone number', blank=True, max_length=255)
+  
+    pli_policy_issued = models.DateField('Date policy issued (mm/dd/yyyy)', blank=True, null=True)
+    pli_policy_expiration = models.DateField('Expiration date of policy (mm/dd/yyyy)', blank=True, null=True)
+
+
+##############################################################################################
+## Workers’ Compensation insurance
+##############################################################################################    
+class Model_L(models.Model):
+    class Meta:
+        abstract = True
+
+    wci_state = models.IntegerField('Does the applicant have Workers Compensation insurance as required by state law?', choices=const.WCI_STATES, null=True)
+    wci_explanation = models.CharField('If applicable, attach proof of maintenance of Workers Compensation insurance. If not applicable, check N/A and provide an explanation below', 
+                                      blank=True, max_length=255)
+    
+   
+##############################################################################################
+## Date of birth & Gender & Other numbers
+##############################################################################################    
+class Model_M(models.Model):
+    class Meta:
+        abstract = True
+    
+    date_birth = models.DateField('Date of birth', blank=True, null=True)
+    gender = models.BooleanField('Gender', default=False)
+    any_local_numbers = models.CharField('Any local business license numbers, permits (attach a legible copy(ies)) If N/A, provide explanation', blank=True, max_length=255)
+    sellers_permit_number= models.CharField('Seller’s Permit number', blank=True, max_length=255)
 
 
 ##############################################################################################
@@ -149,14 +269,15 @@ class Model_E(models.Model):
 
 # = models.BooleanField('', default=False)
 # = models.CharField('', blank=True, max_length=255)
+# = models.DateField('', blank=True, null=True)
+    
 
-
-class Provider(Model_A, Model_B, Model_C, Model_D, Model_E):
+class Provider(Model_A, Model_B, Model_C, Model_D, Model_E, Model_F, Model_G, Model_H, 
+               Model_I, Model_J, Model_K, Model_L, Model_M):
     """
     Info about HC Provider
     """
     user = models.OneToOneField(User)
-    #title = models.CharField(max_length=100)
     
 
 

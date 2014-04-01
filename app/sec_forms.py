@@ -2,8 +2,8 @@ from django import forms
 from django.core.urlresolvers import reverse
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Div, MultiField
-from crispy_forms.bootstrap import InlineField
+from crispy_forms.layout import Layout, Fieldset, Field, ButtonHolder, Submit, Div, HTML, MultiField
+from crispy_forms.bootstrap import InlineField, InlineRadios
 
 from models import *
 
@@ -98,9 +98,118 @@ class SecD(BaseForm):
 
 class SecE(BaseForm):
     def get_layout(self):
-        lo = None
+        lo = Layout(
+               Fieldset('Business address',
+                        'ba_title', 'ba_city', 'ba_county', 'ba_state', 'ba_zip'
+                    ),
+
+               Fieldset('If you are applying as a facility-based provider, complete this section:',
+                        'is_a_licensed_facility',
+                        HTML('<div class="alert alert-info">If yes, check the option that applies:</div>'),
+                        'facility_option_1', 'facility_option_2'
+                        ),
+            
+               Fieldset('Pay-to address',
+                        'pa_title', 'pa_city', 'pa_county', 'pa_state', 'pa_zip'
+                    ),            
+
+               Fieldset('Mailing address',
+                        'ma_title', 'ma_city', 'ma_county', 'ma_state', 'ma_zip'
+                    ),
+
+        
+                HTML('<div class="alert alert-info">For a change of business address, enter location moving from:</div>'),
+                       
+               Fieldset('Previous business address',
+                        'pr_title', 'pr_city', 'pr_county', 'pr_state', 'pr_zip'
+                    )
+
+
+            )
+
         return lo
 
     class Meta:
         model = Model_E
 
+
+class SecF(BaseForm):
+    def get_layout(self):
+        lo = None
+        return None
+        
+    class Meta:
+        model = Model_F
+
+
+class SecG(BaseForm):
+    def get_layout(self):
+        lo = None
+        return None
+        
+    class Meta:
+        model = Model_G
+
+class SecH(BaseForm):
+    def get_layout(self):
+        lo = Layout(Fieldset('Nurse Practitioner only',
+                             'duration_of_training','clinical_training'
+                         )
+        )
+        return lo
+        
+    class Meta:
+        model = Model_H
+
+class SecI(BaseForm):
+    def get_layout(self):
+        lo = None
+        return None
+        
+    class Meta:
+        model = Model_I
+
+class SecJ(BaseForm):
+    def get_layout(self):
+        lo = Layout(Fieldset('Proof of Liability Insurance',
+                             'li_company','li_number', 'li_agent',
+                             'li_agent_phone', 'li_policy_issued', 
+                             'li_policy_expiration'
+                         ))
+        return lo
+        
+    class Meta:
+        model = Model_J
+
+
+
+class SecK(BaseForm):
+    def get_layout(self):
+        lo = Layout(Fieldset('Proof of Professional Liability Insurance',
+                             'pli_company','pli_number', 'pli_agent',
+                             'pli_agent_phone', 'pli_policy_issued', 
+                             'pli_policy_expiration'
+                         ))
+        return lo
+        
+    class Meta:
+        model = Model_K
+
+
+class SecL(BaseForm):
+    def get_layout(self):
+        lo = Layout(InlineRadios('wci_state'),
+                    'wci_explanation'
+                    )
+        return lo
+        
+    class Meta:
+        model = Model_L
+
+class SecM(BaseForm):
+    def get_layout(self):
+        lo = None
+        return None
+        
+    class Meta:
+        model = Model_M

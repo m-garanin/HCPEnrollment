@@ -13,7 +13,14 @@ SECTIONS = ( ('A', {'title': 'Sec A', 'form':sec_forms.SecA } ),
              ('C', {'title': 'Sec C', 'form':sec_forms.SecC} ),
              ('D', {'title': 'Sec D', 'form':sec_forms.SecD} ),
              ('E', {'title': 'Sec E', 'form':sec_forms.SecE} ),
-
+             ('F', {'title': 'Sec F', 'form':sec_forms.SecF} ),
+             ('G', {'title': 'Sec G', 'form':sec_forms.SecG} ),
+             ('H', {'title': 'Sec H', 'form':sec_forms.SecH} ),
+             ('I', {'title': 'Sec I', 'form':sec_forms.SecI} ),
+             ('J', {'title': 'Sec J', 'form':sec_forms.SecJ} ),
+             ('K', {'title': 'Sec K', 'form':sec_forms.SecK} ),
+             ('L', {'title': 'Sec L', 'form':sec_forms.SecL} ),
+             ('M', {'title': 'Sec M', 'form':sec_forms.SecM} ),
 )
 
 SECTIONS_DICT = dict(SECTIONS)

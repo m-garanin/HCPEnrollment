@@ -116,5 +116,59 @@ section E
 '...ARIZONA...'
 
 
+section F
+---------
+>>> r = c.get(section_url % 'F')
+>>> r.status_code
+200
+
+
+section G
+---------
+>>> r = c.get(section_url % 'G')
+>>> r.status_code
+200
+
+
+section H
+---------
+>>> r = c.get(section_url % 'H')
+>>> r.status_code
+200
+
+
+section I
+---------
+>>> r = c.get(section_url % 'I')
+>>> r.status_code
+200
+
+
+section J
+---------
+>>> r = c.get(section_url % 'J')
+>>> r.status_code
+200
+
+
+section K 
+---------
+>>> r = c.get(section_url % 'K')
+>>> r.status_code
+200
+
+
+section L
+---------
+>>> r = c.get(section_url % 'L')
+>>> r.status_code
+200
+
+section M
+---------
+>>> r = c.get(section_url % 'M')
+>>> r.status_code
+200
+
 
 """

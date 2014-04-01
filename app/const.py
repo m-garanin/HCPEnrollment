@@ -5,8 +5,13 @@ TYPE_OF_ENTITY_CHOICES = ( (10, 'Sole proprietor'),
                            (50, 'Government entity'),
                            (60, 'Nonprofit Corporation'),
                            (70, 'Other'),
-                                         )
+                          )
 
+
+WCI_STATES = ( (None, 'N/A'),
+               (1, 'Yes'),
+               (0, 'No')
+               )
 
 
 STATES = (
@@ -70,4 +75,6 @@ STATES = (
      ("WV", "WEST VIRGINIA"), 
      ("WY", "WYOMING")
 )
+
+
 
