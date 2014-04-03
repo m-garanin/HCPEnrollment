@@ -213,3 +213,40 @@ class SecM(BaseForm):
         
     class Meta:
         model = Model_M
+
+
+class SecN(BaseForm):
+    def get_layout(self):
+        lo = Layout(Fieldset("Information About Individual Signing This Application",
+                             'sig_print_name', 'sig_gender',
+                             'sig_driver_license', 'sig_date_birth',
+                             'sig_social_number'
+                         ),
+
+                    Fieldset("""I declare under penalty of perjury under the laws of the State of California that the foregoing information in this document, in the attachments,
+the disclosure statement, and provider agreement are true, accurate, and complete to the best of my knowledge and belief. I declare that I have
+the authority to legally bind the applicant or provider pursuant to CCR, Title 22, Section 51000.30(a)(2)(B).
+                    """,
+                             'sig_signature', 'sig_title',
+                             'sig_city', 'sig_state', 'sig_date',
+                             'sig_notary'
+                         )
+            )
+        return lo
+
+    class Meta:
+        model = Model_N
+
+
+class SecO(BaseForm):
+    def get_layout(self):
+        lo = Layout(Fieldset("Contact Persons Information",
+                             'con_same_person', 'con_name',
+                             'con_gender', 'con_title',
+                             'con_email', 'con_phone'
+                         ))
+        return lo
+
+    
+    class Meta:
+        model = Model_O

@@ -75,11 +75,11 @@ class Model_C(models.Model):
     
     # only for Corporation
     corporate_number = models.CharField('Corporate number', blank=True, max_length=255)
-    state_incorporated = models.CharField('State incorporated', blank=True, max_length=2) # TODO: from states-dictionary
+    state_incorporated = models.CharField('State incorporated', choices=const.STATES, blank=True, max_length=2) 
     
     # only for LLC
     llc_number = models.CharField('LLC number', blank=True, max_length=255)
-    state_registered_filed = models.CharField('State registered/filed', blank=True, max_length=2) # TODO: from states-dictionary
+    state_registered_filed = models.CharField('State registered/filed', choices=const.STATES, blank=True, max_length=2)
     
     # only for Nonprofit Corporation
     type_of_nonprofit  = models.CharField('Type of nonprofit', blank=True, max_length=255)
@@ -264,6 +264,60 @@ class Model_M(models.Model):
 
 
 ##############################################################################################
+## Information About Individual Signing This Application
+##############################################################################################    
+class Model_N(models.Model):
+    class Meta:
+        abstract = True
+        
+    # 26
+    sig_print_name = models.CharField("""Print name of applicant or provider or person 
+                                         signing the application on behalf of the applicant or provider""", blank=True, max_length=255)
+    # 27
+    sig_gender = models.BooleanField('Gender', default=False)
+
+    # 28
+    sig_driver_license = models.CharField('Driver’s license or state-issued identification number and state of issuance', blank=True, max_length=255)
+    
+    # 29
+    sig_date_birth = models.DateField('Date of birth', blank=True, null=True)
+    
+    # 30
+    sig_social_number = models.CharField('Social security number', blank=True, max_length=255)
+
+
+    # 31 block
+    sig_signature = models.CharField('Signature of provider or person on behalf of the applicant or provider', blank=True, max_length=255)
+    sig_title = models.CharField('Title', blank=True, max_length=255)
+    sig_city = models.CharField('Executed at city', blank=True, max_length=255)
+    sig_state = models.CharField('Executed at state', choices=const.STATES, blank=True, max_length=2)
+    sig_date = models.DateField('Executed at date', blank=True, null=True)
+    
+    # 32
+    sig_notary = models.CharField("""Notary Public — Please see instructions under number 32 for who 
+                          must have their application signed by a Notary Public in the form specified by
+                          Section 1189 of the Civil Code.""", blank=True, max_length=255)
+    
+
+##############################################################################################
+## Contact Person’s Information
+##############################################################################################    
+class Model_O(models.Model):
+    class Meta:
+        abstract = True
+
+    # 33 block
+    con_same_person = models.BooleanField("""Check here if you are the same person identified in item 26. 
+                                             If you checked the box, provide only the e-mail address and telephone number below""", default=False)
+    
+    con_name = models.CharField('Contact Person’s Name (last first middle)', blank=True, max_length=255)
+    con_gender = models.BooleanField('Gender', default=False)
+
+    con_title = models.CharField('Title/Position', blank=True, max_length=255)
+    con_email = models.EmailField('E-mail address', blank=True, max_length=255)
+    con_phone = models.CharField('Telephone number', blank=True, max_length=255)
+
+##############################################################################################
 ## 
 ##############################################################################################    
 
@@ -273,7 +327,7 @@ class Model_M(models.Model):
     
 
 class Provider(Model_A, Model_B, Model_C, Model_D, Model_E, Model_F, Model_G, Model_H, 
-               Model_I, Model_J, Model_K, Model_L, Model_M):
+               Model_I, Model_J, Model_K, Model_L, Model_M, Model_N, Model_O):
     """
     Info about HC Provider
     """
