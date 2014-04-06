@@ -170,17 +170,4 @@ section M
 >>> r.status_code
 200
 
-section N
----------
->>> r = c.get(section_url % 'N')
->>> r.status_code
-200
-
-section O
----------
->>> r = c.get(section_url % 'O')
->>> r.status_code
-200
-
-
 """

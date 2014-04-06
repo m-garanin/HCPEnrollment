@@ -2,7 +2,7 @@ from django import forms
 from django.core.urlresolvers import reverse
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Field, ButtonHolder, Submit, Div, HTML, MultiField
+from crispy_forms.layout import Layout, Fieldset, Field, ButtonHolder, Submit, Div, HTML, MultiField, Row, Column
 from crispy_forms.bootstrap import InlineField, InlineRadios
 
 from models import *
@@ -35,12 +35,16 @@ class SecA(BaseForm):
                         'additional_business_address', 
                         'new_taxpayer_id_number',
                         'facility_based_provider',
-                        MultiField('Change of ownership',
-                                   InlineField('change_of_ownership'),
-                                   InlineField('change_of_ownership_date')) ,
+                        
+                        'change_of_ownership',
+                        InlineField('change_of_ownership_date'),
+                        
                         'cumulative_change_of_50_person',
+                        InlineField('cumulative_change_of_50_person_date'),
+
                         'sale_of_assets_50_percent',
-                        'ar_special_effective_date',
+                        InlineField('sale_of_assets_50_percent_date'),
+
                         'continued_enrollment',
                         'i_intend'
                     ),
@@ -175,7 +179,16 @@ class SecJ(BaseForm):
                              'li_company','li_number', 'li_agent',
                              'li_agent_phone', 'li_policy_issued', 
                              'li_policy_expiration'
-                         ))
+                         ),
+                    Fieldset('Proof of Professional Liability Insurance',
+                             'pli_company','pli_number', 'pli_agent',
+                             'pli_agent_phone', 'pli_policy_issued', 
+                             'pli_policy_expiration'
+                         ),
+                    Fieldset('Workers Compensation insurance',
+                             InlineRadios('wci_state'),
+                             'wci_explanation')
+        )
         return lo
         
     class Meta:
@@ -183,39 +196,17 @@ class SecJ(BaseForm):
 
 
 
+
 class SecK(BaseForm):
     def get_layout(self):
-        lo = Layout(Fieldset('Proof of Professional Liability Insurance',
-                             'pli_company','pli_number', 'pli_agent',
-                             'pli_agent_phone', 'pli_policy_issued', 
-                             'pli_policy_expiration'
-                         ))
-        return lo
+        lo = None
+        return None
         
     class Meta:
         model = Model_K
 
 
 class SecL(BaseForm):
-    def get_layout(self):
-        lo = Layout(InlineRadios('wci_state'),
-                    'wci_explanation'
-                    )
-        return lo
-        
-    class Meta:
-        model = Model_L
-
-class SecM(BaseForm):
-    def get_layout(self):
-        lo = None
-        return None
-        
-    class Meta:
-        model = Model_M
-
-
-class SecN(BaseForm):
     def get_layout(self):
         lo = Layout(Fieldset("Information About Individual Signing This Application",
                              'sig_print_name', 'sig_gender',
@@ -235,10 +226,10 @@ the authority to legally bind the applicant or provider pursuant to CCR, Title 2
         return lo
 
     class Meta:
-        model = Model_N
+        model = Model_L
 
 
-class SecO(BaseForm):
+class SecM(BaseForm):
     def get_layout(self):
         lo = Layout(Fieldset("Contact Persons Information",
                              'con_same_person', 'con_name',
@@ -249,4 +240,4 @@ class SecO(BaseForm):
 
     
     class Meta:
-        model = Model_O
+        model = Model_M

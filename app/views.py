@@ -21,9 +21,6 @@ SECTIONS = ( ('A', {'title': 'Sec A', 'form':sec_forms.SecA } ),
              ('K', {'title': 'Sec K', 'form':sec_forms.SecK} ),
              ('L', {'title': 'Sec L', 'form':sec_forms.SecL} ),
              ('M', {'title': 'Sec M', 'form':sec_forms.SecM} ),
-             ('N', {'title': 'Sec N', 'form':sec_forms.SecN} ),
-             ('O', {'title': 'Sec O', 'form':sec_forms.SecO} ),
-
 )
 
 SECTIONS_DICT = dict(SECTIONS)
