@@ -221,7 +221,10 @@ class SecJ(BaseForm):
 
 class SecK(BaseForm):
     def get_layout(self):
-        lo = None
+        lo = Layout('date_birth',
+                    'gender',
+                    'any_local_numbers'
+        )
         return None
         
     class Meta:

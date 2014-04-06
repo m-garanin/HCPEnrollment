@@ -13,6 +13,11 @@ WCI_STATES = ( (None, 'N/A'),
                (0, 'No')
                )
 
+GENDER = (
+           (True, 'Male'),
+           (False, 'Female')
+         )
+
 
 STATES = (
      ("AK", "ALASKA"),
