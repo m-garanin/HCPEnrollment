@@ -17,6 +17,5 @@ pip install uwsgi
 
 TODO
 =====
-- merge J & K & L
 - taxonomy codes merge into Formfields
 - insert help into formfields

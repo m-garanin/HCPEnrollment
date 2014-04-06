@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 from django import forms
 from django.core.urlresolvers import reverse
 
@@ -6,6 +7,9 @@ from crispy_forms.layout import Layout, Fieldset, Field, ButtonHolder, Submit, D
 from crispy_forms.bootstrap import InlineField, InlineRadios
 
 from models import *
+
+def HELP(key):
+    return HTML('<p class="help-block">' + h(key) + '</p>')
 
 
 class BaseForm(forms.ModelForm):
@@ -76,6 +80,7 @@ class SecC(BaseForm):
 
     def get_layout(self):
         lo = Layout(Fieldset('Type of entity',
+                             HELP('020'),
                              'type_of_entity',
                              'corporate_number',
                              'state_incorporated',
@@ -104,6 +109,7 @@ class SecE(BaseForm):
     def get_layout(self):
         lo = Layout(
                Fieldset('Business address',
+                        HELP('4'),
                         'ba_title', 'ba_city', 'ba_county', 'ba_state', 'ba_zip'
                     ),
 
@@ -114,10 +120,12 @@ class SecE(BaseForm):
                         ),
             
                Fieldset('Pay-to address',
+                        HELP('5'),
                         'pa_title', 'pa_city', 'pa_county', 'pa_state', 'pa_zip'
                     ),            
 
                Fieldset('Mailing address',
+                        HELP('6'),
                         'ma_title', 'ma_city', 'ma_county', 'ma_state', 'ma_zip'
                     ),
 
@@ -125,6 +133,7 @@ class SecE(BaseForm):
                 HTML('<div class="alert alert-info">For a change of business address, enter location moving from:</div>'),
                        
                Fieldset('Previous business address',
+                        HELP('7'),
                         'pr_title', 'pr_city', 'pr_county', 'pr_state', 'pr_zip'
                     )
 
@@ -139,8 +148,19 @@ class SecE(BaseForm):
 
 class SecF(BaseForm):
     def get_layout(self):
-        lo = None
-        return None
+        lo = Layout('license_number',
+                    InlineField('license_effective_date'),
+                    InlineField('license_expiration_date'),
+                    'provider_type',
+                    'medicare_other_NPI',
+                    Fieldset('Taxonomy code',
+                             HELP('11'),
+                             'primary_taxonomy',
+                             'taxonomy_b',
+                             'taxonomy_c'
+                        )
+                    )
+        return lo
         
     class Meta:
         model = Model_F
@@ -176,11 +196,13 @@ class SecI(BaseForm):
 class SecJ(BaseForm):
     def get_layout(self):
         lo = Layout(Fieldset('Proof of Liability Insurance',
+                             HELP('19'),
                              'li_company','li_number', 'li_agent',
                              'li_agent_phone', 'li_policy_issued', 
                              'li_policy_expiration'
                          ),
                     Fieldset('Proof of Professional Liability Insurance',
+                             HELP('20'),
                              'pli_company','pli_number', 'pli_agent',
                              'pli_agent_phone', 'pli_policy_issued', 
                              'pli_policy_expiration'
@@ -218,6 +240,7 @@ class SecL(BaseForm):
 the disclosure statement, and provider agreement are true, accurate, and complete to the best of my knowledge and belief. I declare that I have
 the authority to legally bind the applicant or provider pursuant to CCR, Title 22, Section 51000.30(a)(2)(B).
                     """,
+                             HELP('31'),
                              'sig_signature', 'sig_title',
                              'sig_city', 'sig_state', 'sig_date',
                              'sig_notary'
@@ -232,6 +255,7 @@ the authority to legally bind the applicant or provider pursuant to CCR, Title 2
 class SecM(BaseForm):
     def get_layout(self):
         lo = Layout(Fieldset("Contact Persons Information",
+                             HELP('33'),
                              'con_same_person', 'con_name',
                              'con_gender', 'con_title',
                              'con_email', 'con_phone'

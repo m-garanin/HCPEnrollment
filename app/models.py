@@ -173,7 +173,7 @@ class Model_F(models.Model):
         
         
     # 8 block
-    license_number = models.CharField('License number', blank=True, max_length=255)
+    license_number = models.CharField('License number', blank=True, max_length=255, help_text=h('8'))
     license_effective_date = models.DateField('License effective date', blank=True, null=True)
     license_expiration_date = models.DateField('License expiration date', blank=True, null=True)
     
@@ -182,11 +182,11 @@ class Model_F(models.Model):
                                      help_text=h('9') )
     
     # 10
-    medicare_other_NPI= models.CharField('Medicare/Other NPI', blank=True, max_length=255,
+    medicare_other_NPI = models.CharField('Medicare/Other NPI', blank=True, max_length=255,
                                          help_text=h('10'))
 
     # 11 block
-    primary_taxonomy = models.CharField('Primary Taxonomy Code', blank=True, max_length=255, help_text=h('11'))
+    primary_taxonomy = models.CharField('Primary Taxonomy Code', blank=True, max_length=255)
     taxonomy_b = models.CharField('Taxonomy Code', blank=True, max_length=255)
     taxonomy_c = models.CharField('Taxonomy Code', blank=True, max_length=255)
     
