@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" media="screen" href="http://eonasdan.github.io/bootstrap-datetimepicker/content/bootstrap-datetimepicker.css" />
+
+<script type="text/javascript" src="http://eonasdan.github.io/bootstrap-datetimepicker/scripts/moment.js"></script>
+
+<script type="text/javascript" src="http://eonasdan.github.io/bootstrap-datetimepicker/scripts/bootstrap-datetimepicker.js"></script>
+
+<script>
+$(
+   function (){
+              $('.dateinput').datetimepicker({pickTime: false});
+              }
+);
+
+</script>
+{% endblock %}
+
+
 {% block content %}
 <center>
 <h3 class="center-block">MEDI-CAL PROVIDER APPLICATION</h3>
@@ -16,5 +34,7 @@
 {% block section %}
 {% endblock %}
 </div>
+
+
 
 {% endblock %}
