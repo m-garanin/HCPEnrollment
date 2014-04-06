@@ -15,7 +15,3 @@ pip install django-crispy-forms
 
 pip install uwsgi
 
-TODO
-=====
-- taxonomy codes merge into Formfields
-- insert help into formfields

@@ -281,7 +281,7 @@ class Model_K(models.Model):
     date_birth = models.DateField('Date of birth', blank=True, null=True, help_text=h('22'))
     
     # 23
-    gender = models.BooleanField('Gender', default=False, help_text=h('23'))
+    gender = models.NullBooleanField('Gender', choices=const.GENDER ,help_text=h('23'))
     
     # 24
     any_local_numbers = models.CharField('Any local business license numbers, permits (attach a legible copy(ies)) If N/A, provide explanation', blank=True, max_length=255, help_text=h('24'))
@@ -301,7 +301,7 @@ class Model_L(models.Model):
     sig_print_name = models.CharField("""Print name of applicant or provider or person 
                                          signing the application on behalf of the applicant or provider""", blank=True, max_length=255, help_text=h('26'))
     # 27
-    sig_gender = models.BooleanField('Gender', default=False, help_text=h('27'))
+    sig_gender = models.NullBooleanField('Gender', choices=const.GENDER, help_text=h('27'))
 
     # 28
     sig_driver_license = models.CharField('Driver’s license or state-issued identification number and state of issuance', blank=True, max_length=255, help_text=h('28'))
@@ -338,8 +338,8 @@ class Model_M(models.Model):
                                              If you checked the box, provide only the e-mail address and telephone number below""", default=False)
     
     con_name = models.CharField('Contact Person’s Name (last first middle)', blank=True, max_length=255)
-    con_gender = models.BooleanField('Gender', default=False)
-
+    con_gender = models.NullBooleanField('Gender', choices=const.GENDER)
+    
     con_title = models.CharField('Title/Position', blank=True, max_length=255)
     con_email = models.EmailField('E-mail address', blank=True, max_length=255)
     con_phone = models.CharField('Telephone number', blank=True, max_length=255)
