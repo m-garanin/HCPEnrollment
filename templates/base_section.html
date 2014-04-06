@@ -13,15 +13,18 @@ $(
               $('.dateinput').datetimepicker({pickTime: false});
               }
 );
-
 </script>
+
 {% endblock %}
 
 
 {% block content %}
+
 <center>
 <h3 class="center-block">MEDI-CAL PROVIDER APPLICATION</h3>
 </center>
+
+
 
 <ul class="nav nav-tabs">
  {% for code, sec in sections %}
@@ -30,7 +33,16 @@ $(
   </li>
  {% endfor %}
 </ul>
+
+
 <div class="tab-content section_body">
+
+<button type="button" class="pull-right btn btn-default btn-lg" onclick="javascript: $('.help-block').slideToggle();">
+  <span class="glyphicon glyphicon-info-sign"></span>
+</button>
+<div class="clearfix"></div>
+
+
 {% block section %}
 {% endblock %}
 </div>
